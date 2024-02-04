@@ -19,6 +19,9 @@ stop: ## Stop the server
 migrate: ## Migrate the database
 	 @docker compose run --rm web python manage.py migrate
 
+makemigrations: ## Make migrations
+	 @docker compose run --rm web python manage.py makemigrations
+
 createsuperuser: ## Creates a super user. Server must be running to run this
 	@docker compose run --rm web python manage.py createsuperuser
 
