@@ -3,9 +3,7 @@
 default: help
 
 help: ## Show this help.
-	@echo
-	@fgrep -h " ## " $(MAKEFILE_LIST) | fgrep -v fgrep | sed -Ee 's/([a-z.]*):[^#]*##(.*)/\1##\2/' | sort -k 1 | column -t -s "##"
-	@echo
+	@grep -F -h " ## " $(MAKEFILE_LIST) | grep -F -v fgrep | sed -Ee 's/([a-z.]*):[^#]*##(.*)/\1##\2/' | sort -k 1 | column -t -s "##"
 
 run: ## Start the server
 	@docker compose up
@@ -35,8 +33,8 @@ test: ## Runs the tests
 	@docker compose run --rm web python manage.py test
 
 lint: ## Lints the project. Uses ruff
-	docker compose run --rm web ruff check . --fix && \
-	docker compose run --rm web ruff format .
+	docker compose run --rm web ruff format . && \
+	docker compose run --rm web ruff check . --fix
 
 shell: ## Run django shell
 	@docker compose run --rm web python manage.py shell
