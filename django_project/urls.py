@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from debug_toolbar.toolbar import debug_toolbar_urls
 
 from .views import healthz
 
@@ -23,4 +24,4 @@ urlpatterns = [
     path("adminz/", admin.site.urls),
     path("", include("pages.urls")),
     path("healthz/", healthz, name="healthz"),
-]
+] + debug_toolbar_urls()

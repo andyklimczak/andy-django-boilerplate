@@ -1,16 +1,23 @@
-version: "3.9"
+x-base: &base
+  build: .
+  volumes:
+    - .:/code
+  links:
+    - db
+  depends_on:
+    - db
+  environment:
+    APP_ENV: local
+    DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
+    DJANGO_DEBUG: True
+
 services:
   web:
-    build: .
+    <<: *base
     ports:
       - "8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    links:
-      - db
-    depends_on:
-      - db
+
   db:
     image: postgres:15
     volumes:
