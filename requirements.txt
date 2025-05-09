@@ -3,6 +3,6 @@ Django==5.1.7
 sqlparse==0.5.3
 typing_extensions==4.13.2
 psycopg2-binary==2.9.10
-ruff==0.11.8
+ruff==0.11.9
 django-debug-toolbar==5.2.0
 environs[django]==14.1.1
