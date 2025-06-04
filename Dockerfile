@@ -1,4 +1,4 @@
-FROM python:3.13.3-slim-bullseye
+FROM python:3.13.4-slim-bullseye
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 ENV PYTHONDONTWRITEBYTECODE 1
