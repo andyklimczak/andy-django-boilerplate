@@ -35,7 +35,17 @@ make shell
 make test
 ```
 
-### Add dependency
+### Manage dependencies
 
-1. Add to `requirements.txt`
-2. `make build`
+Use [uv](https://docs.astral.sh/uv/) to add or remove packages. Examples:
+
+```shell
+uv add <package>
+uv remove <package>
+```
+
+Rebuild the container when dependencies change:
+
+```shell
+make build
+```

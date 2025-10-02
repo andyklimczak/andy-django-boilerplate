@@ -1,0 +1,3 @@
+This is a project that uses docker. If you want to do anything inside of the docker container (such as adding or updating dependencies, running migrations, etc) run the `make shell` command.
+
+Also look at all the commands in `Makefile` to see if a command is already here. Look at the output of `make help` to get the descriptions of all of the commands. All (most?) commands in `Makefile` should start with `@docker compose run --rm web` in order to run in the docker container.

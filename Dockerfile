@@ -1,12 +1,16 @@
 FROM python:3.13.6-slim-bullseye
 
-ENV PIP_DISABLE_PIP_VERSION_CHECK 1
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV UV_LINK_MODE=copy
 
 WORKDIR /code
 
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y curl ca-certificates \
+    && curl -LsSf https://astral.sh/uv/install.sh | sh \
+    && mv /root/.local/bin/uv /usr/local/bin/uv \
+    && apt-get purge -y --auto-remove curl \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY . .

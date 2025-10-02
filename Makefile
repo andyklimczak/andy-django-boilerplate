@@ -1,9 +1,12 @@
-.PHONY: help run build stop migrate createsuperuser nuke test lint reindex flush purge shell
+.PHONY: help run build stop migrate createsuperuser nuke test lint reindex flush purge shell lock
 
 default: help
 
 help: ## Show this help.
 	@grep -F -h " ## " $(MAKEFILE_LIST) | grep -F -v fgrep | sed -Ee 's/([a-z.]*):[^#]*##(.*)/\1##\2/' | sort -k 1 | column -t -s "##"
+
+lock: ## Resolve deps and refresh uv.lock
+	@docker compose run --rm web uv lock
 
 run: ## Start the server
 	@docker compose up
