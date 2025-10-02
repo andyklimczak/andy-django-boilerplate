@@ -14,9 +14,13 @@ dependencies = [
     "sqlparse==0.5.3",
     "typing_extensions==4.15.0",
     "psycopg2-binary==2.9.10",
-    "ruff==0.13.2",
     "django-debug-toolbar==6.0.0",
     "environs[django]==14.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff==0.13.2",
 ]
 
 [tool.setuptools.packages.find]

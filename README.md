@@ -1,39 +1,20 @@
 # Django boilerplate
 
+## Requirements
+
+- [Docker](https://www.docker.com/) for Postgres
+- [mise](https://mise.jdx.dev/) to manage tool versions (respects `.tool-versions`)
+- [uv](https://docs.astral.sh/uv/) (installed automatically by `mise install` when the plugin is available, or manually if you prefer)
+
 ## Local setup
 
-1. Install docker
+1. Install dependencies with `mise install`
 2. Copy `.env.example` to `.env`
-3. Run `make run`
-4. Migrate with `make migrate`
-5. Run tests with `make test`
-6. Create a superuser with `make createsuperuser`
-7. See all commands able to be run locally with `make`
-8. Visit http://localhost:8000
-9. Signin with superuser at http://localhost:8000/adminz
-10. Health check at http://localhost:8000/healthz
-
-### Delete local data
-
-To delete all data locally while keeping the tables themselves, run:
-
-```shell
-make purge
-```
-
-### Django shell
-
-To start up, access, and see data through the shell, start the server and run:
-
-```shell
-make shell
-```
-
-### Run tests
-
-```shell
-make test
-```
+3. Create the virtual environment: `bin/sync`
+4. Start both the app and database: `bin/dev` (press `Ctrl+C` to stop)
+5. Apply migrations when needed: `bin/migrate`
+6. Run tests with `bin/test`
+7. Optional: start only Postgres with `bin/db-up` or stop it with `bin/db-down`
 
 ### Manage dependencies
 
@@ -44,8 +25,27 @@ uv add <package>
 uv remove <package>
 ```
 
-Rebuild the container when dependencies change:
+After changing dependencies, refresh the lockfile and rebuild the local environment:
 
 ```shell
-make build
+bin/lock
+bin/sync
 ```
+
+### Editor autocomplete
+
+Stay local and share the same dependency graph as Docker:
+
+```shell
+bin/sync
+```
+
+This wraps `uv sync --extra dev`, building `.venv/` so your editor can see the environment. In VS Code/VSCodium run `Python: Select Interpreter` and pick `.venv/bin/python`.
+
+### Daily workflow
+
+Prefer `bin/dev` to run both the Django server and Postgres in one terminal. If Foreman is unavailable, the script falls back to installing and using Honcho via `uv tool install`.
+
+If you need to manage the database separately, the helper scripts under `bin` (`db-up`, `db-down`, `db-logs`, `nuke`) wrap the `docker compose` commands.
+
+All application commands (`run`, `migrate`, `test`, `shell`, etc.) run directly on the host through `uv` via the scripts in `bin`.

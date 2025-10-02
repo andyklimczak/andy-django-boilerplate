@@ -1,30 +1,19 @@
-x-base: &base
-  build: .
-  volumes:
-    - .:/code
-  links:
-    - db
-  depends_on:
-    - db
-  entrypoint: ["uv", "run"]
-  environment:
-    APP_ENV: local
-    DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
-    DJANGO_DEBUG: True
-
 services:
-  web:
-    <<: *base
-    ports:
-      - "8000:8000"
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
   db:
-    image: postgres:15
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+    image: postgres:17
+    ports:
+      - "5433:5432"
     environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

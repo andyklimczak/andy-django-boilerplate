@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if ! command -v honcho >/dev/null 2>&1; then
+  echo "Honcho not found; installing via uv ..."
+  uv tool install honcho || { echo "Failed to install honcho via uv"; exit 1; }
+fi
+exec honcho start -f Procfile.dev "$@"

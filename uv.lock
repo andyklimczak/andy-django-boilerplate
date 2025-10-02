@@ -12,9 +12,13 @@ dependencies = [
     { name = "django-debug-toolbar" },
     { name = "environs", extra = ["django"] },
     { name = "psycopg2-binary" },
-    { name = "ruff" },
     { name = "sqlparse" },
     { name = "typing-extensions" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "ruff" },
 ]
 
 [package.metadata]
@@ -24,10 +28,11 @@ requires-dist = [
     { name = "django-debug-toolbar", specifier = "==6.0.0" },
     { name = "environs", extras = ["django"], specifier = "==14.3.0" },
     { name = "psycopg2-binary", specifier = "==2.9.10" },
-    { name = "ruff", specifier = "==0.13.2" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = "==0.13.2" },
     { name = "sqlparse", specifier = "==0.5.3" },
     { name = "typing-extensions", specifier = "==4.15.0" },
 ]
+provides-extras = ["dev"]
 
 [[package]]
 name = "asgiref"
