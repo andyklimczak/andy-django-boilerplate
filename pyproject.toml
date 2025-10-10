@@ -13,7 +13,7 @@ dependencies = [
     "Django==5.1.7",
     "sqlparse==0.5.3",
     "typing_extensions==4.15.0",
-    "psycopg2-binary==2.9.10",
+    "psycopg2-binary==2.9.11",
     "django-debug-toolbar==6.0.0",
     "environs[django]==14.3.0",
 ]
