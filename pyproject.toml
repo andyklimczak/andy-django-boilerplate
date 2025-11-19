@@ -9,7 +9,7 @@ description = "A Django boilerplate project configured for Docker-based developm
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "asgiref==3.10.0",
+    "asgiref==3.11.0",
     "Django==5.1.7",
     "sqlparse==0.5.3",
     "typing_extensions==4.15.0",
