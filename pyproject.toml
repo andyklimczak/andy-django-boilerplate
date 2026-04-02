@@ -15,7 +15,7 @@ dependencies = [
     "typing_extensions==4.15.0",
     "psycopg2-binary==2.9.11",
     "django-debug-toolbar==6.2.0",
-    "environs[django]==14.6.0",
+    "environs[django]==15.0.0",
 ]
 
 [project.optional-dependencies]
