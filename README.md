@@ -49,18 +49,3 @@ Prefer `bin/dev` to run both the Django server and Postgres in one terminal. If 
 If you need to manage the database separately, the helper scripts under `bin` (`db-up`, `db-down`, `db-logs`, `nuke`) wrap the `docker compose` commands.
 
 All application commands (`run`, `migrate`, `test`, `shell`, etc.) run directly on the host through `uv` via the scripts in `bin`.
-
-## CI and dependency auto-merge
-
-`.github/workflows/ci.yml` validates the locked dependency graph on Python 3.13, runs Ruff and Django system/migration checks, and runs the tests against Postgres 17. The `validate` check is required on `master` before merging.
-
-Dependabot schedules and ecosystems remain in `.github/dependabot.yml`. The auto-merge workflow calls the shared [dependabot-auto-merge-action](https://github.com/andyklimczak/dependabot-auto-merge-action), pinned to a reviewed release commit. It uses the **`DEPENDABOT_AUTOMERGE_PAT`** secret to approve verified Dependabot updates and enable squash auto-merge **after required CI passes**.
-
-The current policy is `max-update-type: minor`, which allows patches and minors but leaves major updates manual. Set it to `patch` for patches only, `major` to include majors, or `none` to disable auto-merge on processed PRs. Other shared options include `merge-method`, `approve`, and `dry-run`; see the action's README. Keep the privileged `pull_request_target` job free of PR code checkouts and PR scripts.
-
-The repository must have auto-merge and squash merging enabled, with `validate` required in branch protection. Store the token under the same name in Actions and Dependabot secrets (or selected-repository organization secrets). Use a repository-scoped PAT/GitHub App token with Contents and Pull requests write access, plus Workflows write access for workflow update PRs. Never commit the token or print it. PAT/App merges can trigger follow-up workflows, unlike merges authenticated with `GITHUB_TOKEN`.
-
-```shell
-gh secret set DEPENDABOT_AUTOMERGE_PAT --repo andyklimczak/andy-django-boilerplate
-gh secret set DEPENDABOT_AUTOMERGE_PAT --app dependabot --repo andyklimczak/andy-django-boilerplate
-```
